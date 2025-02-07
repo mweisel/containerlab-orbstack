@@ -1,0 +1,28 @@
+---
+- name: check if binary is installed
+  ansible.builtin.stat:
+    path: /usr/local/go/bin/go
+  register: go_installed
+
+- block:
+    - name: download latest version
+      ansible.builtin.shell:
+        cmd: >
+          curl -Lo go.tar.gz go.dev/dl/$(curl https://go.dev/dl/?mode=json
+          | jq -r '.[0].version').linux-arm64.tar.gz
+        chdir: /tmp
+
+    - name: unarchive and install
+      ansible.builtin.unarchive:
+        src: /tmp/go.tar.gz
+        dest: /usr/local
+        remote_src: true
+      become: true
+
+    - name: add /usr/local/go/bin to path
+      ansible.builtin.copy:
+        content: export PATH=$PATH:/usr/local/go/bin
+        dest: /etc/profile.d/go.sh
+        mode: 0644
+      become: true
+  when: not go_installed.stat.exists

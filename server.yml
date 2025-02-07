@@ -1,0 +1,22 @@
+---
+- name: deploy containerlab server
+  hosts: clab@orb
+
+  pre_tasks:
+    - name: update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+      register: apt_result
+      until: apt_result is success
+      ignore_errors: true
+      retries: 3
+      delay: 3
+      become: true
+
+  roles:
+    - role: base
+    - role: user
+    - role: go
+    - role: docker
+    - role: gh
+    - role: clab

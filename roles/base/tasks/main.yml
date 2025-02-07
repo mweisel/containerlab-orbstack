@@ -1,0 +1,13 @@
+---
+- name: get and install packages
+  ansible.builtin.apt:
+    pkg:
+      - bash-completion
+      - curl
+      - file
+      - tree
+      - htop
+      - tmux
+      - jq
+    state: present
+  become: true

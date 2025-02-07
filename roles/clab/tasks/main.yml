@@ -1,0 +1,60 @@
+---
+- name: check if binary is installed
+  ansible.builtin.stat:
+    path: /usr/bin/clab
+  register: clab_installed
+
+- block:
+    - name: get latest version
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/srl-labs/containerlab/releases/latest
+        return_content: true
+      register: clab_latest
+
+    - name: get and install
+      ansible.builtin.apt:
+        deb: "{{ item.browser_download_url }}"
+      loop: "{{ clab_latest.json.assets }}"
+      when: "'linux_arm64.deb' in item.name"
+      become: true
+
+    - name: enable bash completion
+      ansible.builtin.shell:
+        cmd: /usr/bin/containerlab completion bash > /etc/bash_completion.d/containerlab
+        creates: /etc/bash_completion.d/containerlab
+      become: true
+
+    - name: enable clab symlink for bash completion
+      ansible.builtin.copy:
+        content: complete -o default -F __start_containerlab clab
+        dest: /etc/profile.d/clab-bash-completion.sh
+        mode: 0644
+      become: true
+
+    - name: update bash prompt
+      ansible.builtin.copy:
+        content: |
+          WHITE='\[\033[1;37m\]'; LIGHTRED='\[\033[1;31m\]'; LIGHTGREEN='\[\033[1;32m\]'; LIGHTBLUE='\[\033[1;34m\]'; DEFAULT='\[\033[0m\]'
+          cLINES=$WHITE; cBRACKETS=$WHITE; cERROR=$LIGHTRED; cSUCCESS=$LIGHTGREEN; cHST=$LIGHTGREEN; cPWD=$LIGHTBLUE; cCMD=$DEFAULT
+          promptcmd() {
+          PREVRET=$?
+          PS1="\n"
+          if [ $PREVRET -ne 0 ]; then
+              PS1="${PS1}${cBRACKETS}[${cERROR}x${cBRACKETS}]${cLINES}\342\224\200"
+          else
+              PS1="${PS1}${cBRACKETS}[${cSUCCESS}*${cBRACKETS}]${cLINES}\342\224\200"
+          fi
+          PS1="${PS1}${cBRACKETS}[${cHST}\h${cBRACKETS}]${cLINES}\342\224\200"
+          PS1="${PS1}[${cPWD}\w${cBRACKETS}]"
+          PS1="${PS1}\n${cLINES}\342\224\224\342\224\200\342\224\200> ${cCMD}"
+          }
+          PROMPT_COMMAND=promptcmd
+        dest: /etc/profile.d/prompt.sh
+        mode: 0644
+      become: true
+  when: not clab_installed.stat.exists
+
+- name: copy example lab to labs directory
+  ansible.builtin.copy:
+    src: srl01
+    dest: "{{ ansible_env.HOME }}/labs"
