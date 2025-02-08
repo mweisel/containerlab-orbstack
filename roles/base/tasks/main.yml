@@ -2,6 +2,7 @@
 - name: get and install packages
   ansible.builtin.apt:
     pkg:
+      - build-essential
       - bash-completion
       - curl
       - file
