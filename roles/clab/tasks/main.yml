@@ -54,7 +54,10 @@
       become: true
   when: not clab_installed.stat.exists
 
-- name: copy example lab to labs directory
+- name: copy example labs to labs directory
   ansible.builtin.copy:
-    src: srl01
+    src: "{{ item }}"
     dest: "{{ ansible_env.HOME }}/labs"
+  loop:
+    - srl01
+    - iol

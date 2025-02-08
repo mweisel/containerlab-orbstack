@@ -10,5 +10,6 @@
       - htop
       - tmux
       - jq
+      - sshpass
     state: present
   become: true

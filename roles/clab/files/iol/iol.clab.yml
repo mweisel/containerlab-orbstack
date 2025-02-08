@@ -1,0 +1,14 @@
+name: iol
+
+topology:
+  nodes:
+    r1:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:17.15.01
+    sw1:
+      kind: cisco_iol
+      image: vrnetlab/cisco_iol:L2-17.15.01
+      type: l2
+
+  links:
+    - endpoints: ["r1:e0/1", "sw1:e0/1"]
