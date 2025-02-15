@@ -13,3 +13,12 @@
       - sshpass
     state: present
   become: true
+
+- name: limit ssh to display only error messages
+  ansible.builtin.copy:
+    content: |
+      Host *
+              LogLevel ERROR
+    dest: /etc/ssh/ssh_config.d/quiet.conf
+    mode: 0644
+  become: true
