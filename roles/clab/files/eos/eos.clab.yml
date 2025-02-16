@@ -2,6 +2,6 @@ name: eos
 
 topology:
   nodes:
-    r1:
+    sw1:
       kind: ceos
       image: ceos:4.33.1-EFT3
