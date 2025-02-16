@@ -61,3 +61,4 @@
   loop:
     - srl01
     - iol
+    - eos
