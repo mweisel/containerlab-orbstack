@@ -3,5 +3,5 @@ name: eos
 topology:
   nodes:
     sw1:
-      kind: ceos
-      image: ceos:4.33.1-EFT3
+      kind: arista_ceos
+      image: arista_ceos:4.33.1-EFT3

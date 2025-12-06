@@ -1,7 +1,7 @@
 ---
 - name: create labs and images directories
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/{{ item }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/{{ item }}"
     state: directory
   loop:
     - labs

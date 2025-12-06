@@ -57,7 +57,7 @@
 - name: copy example labs to labs directory
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/labs"
+    dest: "{{ ansible_facts['env']['HOME'] }}/labs"
   loop:
     - srl01
     - iol
