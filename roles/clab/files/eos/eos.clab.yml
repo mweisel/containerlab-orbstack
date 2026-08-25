@@ -4,4 +4,4 @@ topology:
   nodes:
     sw1:
       kind: arista_ceos
-      image: arista_ceos:4.33.1-EFT3
+      image: arista_ceos:4.36.2F

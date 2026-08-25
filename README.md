@@ -8,7 +8,7 @@ The solution allows the following Containerlab kinds to run *locally* on your Ma
 
 - [Nokia SR Linux](https://containerlab.dev/manual/kinds/srl)
 - [Arista cEOS](https://marcstech.blog/archives/add-arista-ceos-containerlab-macos)
-- [Cisco IOL](https://marcstech.blog/archives/add-cisco-iol-containerlab-macos) with [Rosetta](https://developer.apple.com/documentation/virtualization/running-intel-binaries-in-linux-vms-with-rosetta)
+- [Cisco IOL](https://marcstech.blog/archives/add-cisco-iol-containerlab-macos)
 
 ## Guide
 

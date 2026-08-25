@@ -4,4 +4,4 @@ topology:
   nodes:
     srl:
       kind: nokia_srlinux
-      image: ghcr.io/nokia/srlinux:24.10.2-357-arm64
+      image: ghcr.io/nokia/srlinux:latest

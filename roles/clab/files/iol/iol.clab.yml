@@ -4,10 +4,10 @@ topology:
   nodes:
     r1:
       kind: cisco_iol
-      image: vrnetlab/cisco_iol:17.15.01
+      image: vrnetlab/cisco_iol:17.18.02
     sw1:
       kind: cisco_iol
-      image: vrnetlab/cisco_iol:L2-17.15.01
+      image: vrnetlab/cisco_iol:L2-17.18.02
       type: l2
 
   links:
